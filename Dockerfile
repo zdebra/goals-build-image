@@ -39,3 +39,8 @@ RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.
     && ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 RUN mkdir -p ~/.kube
+
+# install migrations tool for postgres
+RUN go get github.com/lib/pq \
+    && go get -u -d github.com/mattes/migrate/cli \
+    && go build -tags 'postgres' -o /usr/local/bin/migrate github.com/mattes/migrate/cli
